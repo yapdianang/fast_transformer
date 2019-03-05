@@ -74,7 +74,7 @@ if __name__ == "__main__":
     for i, batch in enumerate(valid_iter):
         src = batch.src.transpose(0, 1)[:1]
         src_mask = (src != SRC.vocab.stoi[BLANK_WORD]).unsqueeze(-2)
-        out = greedy_decode(model, src, src_mask, max_len=60, start_symbol=TGT.vocab.stoi[BOS_WORD])
+        out = greedy_decode(model, src, src_mask, max_len=500, start_symbol=TGT.vocab.stoi[BOS_WORD])
         print('\n' + "-"*50)
         print('Summarized:', end='\t')
         for i in range(1, out.size(1)):
