@@ -105,7 +105,7 @@ test_iter = MyIterator(test, batch_size=BATCH_SIZE, device=0,
                         batch_size_fn=batch_size_fn, train=False)
 
 
-
+valid_iter = (rebatch(pad_idx, b) for b in valid_iter)
 for i, batch in enumerate(valid_iter):
 	print(i)
 	print(batch.src)
