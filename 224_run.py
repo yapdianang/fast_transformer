@@ -50,7 +50,7 @@ if __name__ == "__main__":
         model.cuda()
         criterion = LabelSmoothing(size=len(TGT.vocab), padding_idx=pad_idx, smoothing=0.1)
         criterion.cuda()
-        BATCH_SIZE = 256  # Was 12000, but I only have 12 GB RAM on my single GPU.
+        BATCH_SIZE = 512  # Was 12000, but I only have 12 GB RAM on my single GPU.
         train_iter = MyIterator(train, batch_size=BATCH_SIZE, device=device, repeat=False,
                                 sort_key=lambda x: (len(x.src), len(x.trg)), batch_size_fn=batch_size_fn, train=True)
         valid_iter = MyIterator(val, batch_size=BATCH_SIZE, device=device, repeat=False,
