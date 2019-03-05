@@ -14,6 +14,7 @@ from transformer.my_iterator import MyIterator, rebatch
 from transformer.noam_opt import NoamOpt
 
 # GPUs to use
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 devices = [0]  # Or use [0, 1] etc for multiple GPUs
 
 BOS_WORD = '<s>'
@@ -52,9 +53,9 @@ if True:
     criterion = LabelSmoothing(size=len(TGT.vocab), padding_idx=pad_idx, smoothing=0.1)
     #criterion.cuda()
     BATCH_SIZE = 600  # Was 12000, but I only have 12 GB RAM on my single GPU.
-    train_iter = MyIterator(train, batch_size=BATCH_SIZE, device=0, repeat=False,
+    train_iter = MyIterator(train, batch_size=BATCH_SIZE, device=device, repeat=False,
                             sort_key=lambda x: (len(x.src), len(x.trg)), batch_size_fn=batch_size_fn, train=True)
-    valid_iter = MyIterator(val, batch_size=BATCH_SIZE, device=0, repeat=False,
+    valid_iter = MyIterator(val, batch_size=BATCH_SIZE, device=device, repeat=False,
                             sort_key=lambda x: (len(x.src), len(x.trg)), batch_size_fn=batch_size_fn, train=False)
     model_par = nn.DataParallel(model, device_ids=devices)
 
