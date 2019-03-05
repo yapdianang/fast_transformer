@@ -13,7 +13,7 @@ class CustomDataset(data.Dataset):
         if not isinstance(fields[0], (tuple, list)):
             fields = [('src', fields[0]), ('trg', fields[1])]
 
-        src_path, trg_path = tuple(os.path.expanduser(path + "/articles.txt"), os.path.expanduser(path = "/summaries.txt"))
+        src_path, trg_path = (os.path.expanduser(path + "/articles.txt"), os.path.expanduser(path+"/summaries.txt"))
 
         examples = []
         with io.open(src_path, mode='r', encoding='utf-8') as src_file, \

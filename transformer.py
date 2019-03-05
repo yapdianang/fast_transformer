@@ -13,41 +13,6 @@ import spacy
 
 from dataset import CustomDataset
 
-#====================================================================
-
-global max_src_in_batch
-global max_tgt_in_batch
-
-spacy_en = spacy.load('en')
-
-BOS_WORD = '<s>'
-EOS_WORD = '</s>'
-BLANK_WORD = '<blank>'
-SRC = data.Field(tokenize=tokenize_en, pad_token=BLANK_WORD)
-TGT = data.Field(tokenize=tokenize_en, init_token=BOS_WORD, eos_token=EOS_WORD, pad_token=BLANK_WORD)
-
-# CREATE train, val, text
-train, val, test = CustomDataset.splits(
-	fields=(SRC, TGT))
-MIN_FREQ = 2
-
-SRC.build_vocab(train.src, min_freq=MIN_FREQ)
-TGT.build_vocab(train.trg, min_freq=MIN_FREQ)
-
-BATCH_SIZE = 12000
-train_iter = MyIterator(train, batch_size=BATCH_SIZE, device=0,
-                        repeat=False, sort_key=lambda x: (len(x.src), len(x.trg)),
-                        batch_size_fn=batch_size_fn, train=True)
-valid_iter = MyIterator(val, batch_size=BATCH_SIZE, device=0,
-                        repeat=False, sort_key=lambda x: (len(x.src), len(x.trg)),
-                        batch_size_fn=batch_size_fn, train=False)
-test_iter = MyIterator(test, batch_size=BATCH_SIZE, device=0,
-                        repeat=False, sort_key=lambda x: (len(x.src), len(x.trg)),
-                        batch_size_fn=batch_size_fn, train=False)
-
-
-#====================================================================
-
 class MyIterator(data.Iterator):
     def create_batches(self):
         if self.train:
@@ -106,6 +71,39 @@ def batch_size_fn(new, count, sofar):
 	src_elements = count * max_src_in_batch
 	tgt_elements = count * max_tgt_in_batch
 	return max(src_elements, tgt_elements)
+
+#====================================================================
+
+global max_src_in_batch
+global max_tgt_in_batch
+
+spacy_en = spacy.load('en')
+
+BOS_WORD = '<s>'
+EOS_WORD = '</s>'
+BLANK_WORD = '<blank>'
+SRC = data.Field(tokenize=tokenize_en, pad_token=BLANK_WORD)
+TGT = data.Field(tokenize=tokenize_en, init_token=BOS_WORD, eos_token=EOS_WORD, pad_token=BLANK_WORD)
+
+# CREATE train, val, text
+train, val, test = CustomDataset.splits(
+	fields=(SRC, TGT))
+MIN_FREQ = 2
+
+SRC.build_vocab(train.src, min_freq=MIN_FREQ)
+TGT.build_vocab(train.trg, min_freq=MIN_FREQ)
+
+BATCH_SIZE = 12000
+train_iter = MyIterator(train, batch_size=BATCH_SIZE, device=0,
+                        repeat=False, sort_key=lambda x: (len(x.src), len(x.trg)),
+                        batch_size_fn=batch_size_fn, train=True)
+valid_iter = MyIterator(val, batch_size=BATCH_SIZE, device=0,
+                        repeat=False, sort_key=lambda x: (len(x.src), len(x.trg)),
+                        batch_size_fn=batch_size_fn, train=False)
+test_iter = MyIterator(test, batch_size=BATCH_SIZE, device=0,
+                        repeat=False, sort_key=lambda x: (len(x.src), len(x.trg)),
+                        batch_size_fn=batch_size_fn, train=False)
+
 
 
 for i, batch in enumerate(valid_iter):
