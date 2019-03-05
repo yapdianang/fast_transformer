@@ -34,15 +34,15 @@ TGT = data.Field(tokenize=tokenize_en, init_token=BOS_WORD,
 if __name__ == "__main__":
     if True:
         spacy_en = spacy.load('en')
-        MAX_LEN = 500
+        MAX_LEN = 1000
         train, val, test = CustomDataset.splits(fields=(SRC, TGT), filter_pred=lambda x: len(vars(x)['src']) <= MAX_LEN and len(vars(x)['trg']) <= MAX_LEN)
 
         MIN_FREQ = 2
         #SRC.build_vocab(train.src, min_freq=MIN_FREQ)
         #TGT.build_vocab(train.trg, min_freq=MIN_FREQ)
 
-        SRC.build_vocab(train.src, max_size=50000)
-        TGT.build_vocab(train.trg, max_size=50000)
+        SRC.build_vocab(train.src, max_size=80000)
+        TGT.build_vocab(train.trg, max_size=80000)
 
 
         pad_idx = TGT.vocab.stoi[BLANK_WORD]
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         model.cuda()
         criterion = LabelSmoothing(size=len(TGT.vocab), padding_idx=pad_idx, smoothing=0.1)
         criterion.cuda()
-        BATCH_SIZE = 8 #600  # Was 12000, but I only have 12 GB RAM on my single GPU.
+        BATCH_SIZE = 256  # Was 12000, but I only have 12 GB RAM on my single GPU.
         train_iter = MyIterator(train, batch_size=BATCH_SIZE, device=device, repeat=False,
                                 sort_key=lambda x: (len(x.src), len(x.trg)), batch_size_fn=batch_size_fn, train=True)
         valid_iter = MyIterator(val, batch_size=BATCH_SIZE, device=device, repeat=False,
@@ -75,18 +75,17 @@ if __name__ == "__main__":
         src = batch.src.transpose(0, 1)[:1]
         src_mask = (src != SRC.vocab.stoi[BLANK_WORD]).unsqueeze(-2)
         out = greedy_decode(model, src, src_mask, max_len=60, start_symbol=TGT.vocab.stoi[BOS_WORD])
-        print('Translation:', end='\t')
+        print('\n' + "-"*50)
+        print('Summarized:', end='\t')
         for i in range(1, out.size(1)):
             sym = TGT.vocab.itos[out[0, i]]
             if sym == EOS_WORD:
                 break
             print(sym, end=' ')
-        print()
         print('Target:', end='\t')
         for i in range(batch.trg.size(0)):
-            sym = TGT.vocab.itos(batch.trg.data[i, 0])
+            sym = TGT.vocab.itos[batch.trg.data[i, 0]]
             if sym == EOS_WORD:
                 break
             print(sym, end=' ')
-        print()
-        break
+        print("-"*50)
