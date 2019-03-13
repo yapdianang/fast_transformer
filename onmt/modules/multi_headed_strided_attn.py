@@ -172,16 +172,24 @@ class MultiHeadedStridedAttention(nn.Module):
           outputs.append(output)
           top_attns.append(top_attn)
 
-        # TODO: add .cuda() after to run on GPU
+        # TODO: add .cuda() after torch.zeros() to run on GPU
         output = torch.zeros((query.shape[0], query.shape[2], outputs[0].shape[2]))
         output[:, splice_inds[1][0]:splice_inds[1][1], :] = outputs[1]
-        output[:, 0:(outputs[0].shape[1]//3)*2, :] = outputs[0][:, 0:(outputs[0].shape[1]//3)*2, :]
-
+        amt = (outputs[0].shape[1]//3)*2
+        output[:, 0:amt, :] = outputs[0][:, 0:amt, :]
         amt = (outputs[2].shape[1]//3)*2
         output[:, -amt:, :] = outputs[2][:, -amt:, :]
 
-        print(output.shape)
-        print(output[0, :, 0])
+        # TODO: add .cuda() after torch.zeros() to run on GPU
+        top_attn = torch.zeros((query.shape[0], query_len, query_len))
+        top_attn[:, splice_inds[1][0]:splice_inds[1][1], splice_inds[1][0]:splice_inds[1][1]] = top_attns[1]
+        amt = (outputs[0].shape[1]//3)*2
+        top_attn[:, 0:amt, 0:amt] = top_attns[0][:, 0:amt, 0:amt]
+        amt = (outputs[2].shape[1]//3)*2
+        top_attn[:, -amt:, -amt:] = top_attns[2][:, -amt:, -amt:]
+
+        print(top_attn.shape)
+        print(top_attn[0, :, :])
         raise "TEST"
 
         return output, top_attn
