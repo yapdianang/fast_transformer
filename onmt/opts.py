@@ -150,8 +150,11 @@ def model_opts(parser):
               help='Number of heads for transformer self-attention')
     group.add('--transformer_ff', '-transformer_ff', type=int, default=2048,
               help='Size of hidden transformer feed-forward')
+    
     group.add('--conv_first', '-conv_first', action="store_true",
           help='Applies 1D Convolution before encoder to reduce sequence length by 3.')
+    group.add('--strided_attn', '-strided_attn', action="store_true",
+          help='Applies strided attention in each encoding step to reduce computation to O(N^2*4/9).')
 
     # Generator and loss options.
     group.add('--copy_attn', '-copy_attn', action="store_true",
