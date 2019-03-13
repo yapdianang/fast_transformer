@@ -157,24 +157,50 @@ class MultiHeadedStridedAttention(nn.Module):
         key_len = key.size(2)
         query_len = query.size(2)
 
-        # Query: 10, 8, 400, 64
         # dim_per_head: 64
-        # Key: 10, 8, 400, 64
-        # Mask: 10, 1, 400
-        # Value: 10, 8, 400, 64
         # Batch size: 10
         # Head Count: 8
         # Query Len: 400
         # Key Len: 400
-        if relations_keys is not None: 
-          print("Relations Keys Shape", relations_keys.shape)
-          print("Relations Values Shape", relations_values.shape)
-          raise "TEST"
+        query_lens = [query_len// 3, query_len//3, query_len - ((query_len//3)*2)] #[query_len//3 * 2, query_len//3 * 2, query_len - ((query_len // 3) * 4)]
 
-        output, top_attn = self.perform_attention(query, dim_per_head, 
-                          key, relations_keys, mask, 
-                          value, relations_values, 
-                          batch_size, head_count, 
-                          query_len, key_len,
-                          shape, unshape)
+        outputs = []
+        top_attns = []
+
+        # Query: 10, 8, 400, 64
+        # Key: 10, 8, 400, 64
+        # Value: 10, 8, 400, 64
+        # Mask: 10, 1, 400
+        # Output: 10, 400, 512
+        # Top_attn: 10, 400, 400
+        count = 0
+        for q_len in query_lens:
+          query_split = query[:, :, count:count+q_len, :]
+          key_split = key[:, :, count:count+q_len, :]
+          value_split = value[:, :, count:count+q_len, :]
+          mask_split = mask[:, :, count:count+q_len]
+          output, top_attn = self.perform_attention(query_split, dim_per_head, key_split, relations_keys, mask_split, value_split, relations_values, batch_size, head_count, q_len, q_len, shape, unshape)
+          outputs.append(output)
+          top_attns.append(top_attn)
+          count += q_len
+
+        output = torch.cat(outputs, dim=1)
+        top_attn = torch.zeros((query.shape[0], query.shape[2], query.shape[2]))#.cuda() TODO: uncomment for running on GPU
+
+        count = 0
+        i = 0
+        for q_len in query_lens:
+          top_attn[:, count:count+q_len, count:count+q_len] = top_attns[i]
+          count += q_len
+          i += 1
+
         return output, top_attn
+
+        # NOTE: Relations_keys and relations_values shapes should be None
+        # output, top_attn = self.perform_attention(query, dim_per_head, 
+                          # key, relations_keys, mask, 
+                          # value, relations_values, 
+                          # batch_size, head_count, 
+                          # query_len, key_len,
+                          # shape, unshape)
+        # return output, top_attn
