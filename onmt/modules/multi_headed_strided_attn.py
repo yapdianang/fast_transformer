@@ -136,6 +136,7 @@ class MultiHeadedStridedAttention(nn.Module):
             key = shape(key)
             value = shape(value)
 
+        relations_keys = None
         if self.max_relative_positions > 0 and type == "self":
             key_len = key.size(2)
             # 1 or key_len x key_len
@@ -154,13 +155,13 @@ class MultiHeadedStridedAttention(nn.Module):
         key_len = key.size(2)
         query_len = query.size(2)
 
-        print("Query Shape", query.shape)
+        if query is not None: print("Query Shape", query.shape)
         print("Dim_per_head", dim_per_head)
-        print("Key Shape", key.shape)
-        print("Relations Keys Shape", relations_keys.shape)
-        print("Mask Shape", mask.shape)
-        print("Value Shape", value.shape)
-        print("Relations Values Shape", relations_values.shape)
+        if key is not None: print("Key Shape", key.shape)
+        if relations_keys is not None: print("Relations Keys Shape", relations_keys.shape)
+        if mask is not None: print("Mask Shape", mask.shape)
+        if value is not None: print("Value Shape", value.shape)
+        if relations_values is not None: print("Relations Values Shape", relations_values.shape)
         print("Batch Size", batch_size)
         print("Head Count", head_count)
         print("Query Len", query_len)
