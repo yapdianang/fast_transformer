@@ -137,6 +137,7 @@ class MultiHeadedStridedAttention(nn.Module):
             value = shape(value)
 
         relations_keys = None
+        relations_values = None
         if self.max_relative_positions > 0 and type == "self":
             key_len = key.size(2)
             # 1 or key_len x key_len
