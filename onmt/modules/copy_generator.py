@@ -184,7 +184,7 @@ class CopyGeneratorLoss(nn.Module):
             non_copy, copy_tok_probs + vocab_probs, copy_tok_probs
         )
         
-        if math.isnan(probs.log()):
+        if math.isnan(probs.log().sum()):
             probs = probs - torch.min(probs) + self.eps
         
         loss = -probs.log()  # just NLLLoss; can the module be incorporated?
