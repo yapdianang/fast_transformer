@@ -188,10 +188,6 @@ class MultiHeadedStridedAttention(nn.Module):
         amt = (outputs[2].shape[1]//3)*2
         top_attn[:, -amt:, -amt:] = top_attns[2][:, -amt:, -amt:]
 
-        print(top_attn.shape)
-        print(top_attn[0, :, :])
-        raise "TEST"
-
         return output, top_attn
 
         # NOTE: Relations_keys and relations_values shapes should be None
