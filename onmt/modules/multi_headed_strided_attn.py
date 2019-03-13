@@ -38,7 +38,8 @@ class MultiHeadedStridedAttention(nn.Module):
                           key, relations_keys, mask, 
                           value, relations_values, 
                           batch_size, head_count, 
-                          query_len, key_len):
+                          query_len, key_len,
+                          shape, unshape):
 
         # 2) Calculate and scale scores.
         query = query / math.sqrt(dim_per_head)
@@ -174,5 +175,6 @@ class MultiHeadedStridedAttention(nn.Module):
                           key, relations_keys, mask, 
                           value, relations_values, 
                           batch_size, head_count, 
-                          query_len, key_len)
+                          query_len, key_len,
+                          shape, unshape)
         return output, top_attn
