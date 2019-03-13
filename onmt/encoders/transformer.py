@@ -89,7 +89,7 @@ class TransformerEncoder(EncoderBase):
     """
 
     def __init__(self, num_layers, d_model, heads, d_ff, dropout, embeddings,
-                 max_relative_positions, conv_first, strided_attn):
+                 max_relative_positions, conv_first, strided_attn, conv_encoder_deconv):
         super(TransformerEncoder, self).__init__()
 
         self.embeddings = embeddings
@@ -101,8 +101,13 @@ class TransformerEncoder(EncoderBase):
              for i in range(num_layers)])
         self.layer_norm = nn.LayerNorm(d_model, eps=1e-6)
         self.conv_first = conv_first
+        self.conv_encoder_deconv = conv_encoder_deconv
         self.conv1d = nn.Conv1d(512, 512, kernel_size=3, stride=3)
         self.mask_pool = nn.MaxPool1d(kernel_size=3, stride=3)
+        self.conv_transpose = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3)
+        self.conv_transpose_pad1 = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3, output_padding=1)
+        self.conv_transpose_pad2 = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3, output_padding=2)
+        assert (not(self.conv_first and self.conv_encoder_deconv))
 
     @classmethod
     def from_opt(cls, opt, embeddings):
@@ -116,7 +121,8 @@ class TransformerEncoder(EncoderBase):
             embeddings,
             opt.max_relative_positions,
             opt.conv_first,
-            opt.strided_attn)
+            opt.strided_attn,
+            opt.conv_encoder_deconv)
 
     def forward(self, src, lengths=None):
         """See :func:`EncoderBase.forward()`"""
@@ -131,7 +137,9 @@ class TransformerEncoder(EncoderBase):
         mask = words.data.eq(padding_idx).unsqueeze(1)  # [B, 1, T]
 
         # if set conv_first=True, convolve first for memory compressed attention and reduce seq length
-        if self.conv_first:
+        original_seq_len = out.shape[1]
+
+        if self.conv_first or self.conv_encoder_deconv:
             out = self.conv1d(out.transpose(1, 2)).transpose(1, 2)
             mask = self.mask_pool(mask.float()).byte()
 
@@ -139,5 +147,17 @@ class TransformerEncoder(EncoderBase):
         for layer in self.transformer:
             out = layer(out, mask)
         out = self.layer_norm(out)
+
+        if self.conv_encoder_deconv:
+            out = out.transpose(1, 2)
+
+            if original_seq_len % 3 == 0:
+                out = self.conv_transpose(out)
+            elif original_seq_len % 3 == 1:
+                out = self.conv_transpose_pad1(out)
+            else:
+                out = self.conv_transpose_pad2(out)
+
+            out = out.transpose(1, 2)
 
         return emb, out.transpose(0, 1).contiguous(), lengths
