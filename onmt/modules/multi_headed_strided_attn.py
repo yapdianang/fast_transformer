@@ -163,6 +163,7 @@ class MultiHeadedStridedAttention(nn.Module):
         outputs = []
         top_attns = []
         for splice in splice_inds:
+          q_len = splice[1] - splice[0]
           query_split = query[:, :, splice[0]:splice[1], :]
           key_split = key[:, :, splice[0]:splice[1], :]
           value_split = value[:, :, splice[0]:splice[1], :]
