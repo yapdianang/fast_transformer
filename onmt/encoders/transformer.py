@@ -6,8 +6,8 @@ import torch.nn as nn
 
 from onmt.encoders.encoder import EncoderBase
 from onmt.modules import MultiHeadedAttention
+from onmt.modules import MultiHeadedStridedAttention
 from onmt.modules.position_ffn import PositionwiseFeedForward
-
 
 class TransformerEncoderLayer(nn.Module):
     """
@@ -23,12 +23,18 @@ class TransformerEncoderLayer(nn.Module):
     """
 
     def __init__(self, d_model, heads, d_ff, dropout,
-                 max_relative_positions=0):
+                 max_relative_positions=0, strided_attn=False):
         super(TransformerEncoderLayer, self).__init__()
 
-        self.self_attn = MultiHeadedAttention(
-            heads, d_model, dropout=dropout,
-            max_relative_positions=max_relative_positions)
+        self.strided_attn = strided_attn
+        if self.strided_attn:
+            self.self_attn = MultiHeadedStridedAttention(
+                heads, d_model, dropout=dropout,
+                max_relative_positions=max_relative_positions)
+        else:
+            self.self_attn = MultiHeadedAttention(
+                heads, d_model, dropout=dropout,
+                max_relative_positions=max_relative_positions)
         self.feed_forward = PositionwiseFeedForward(d_model, d_ff, dropout)
         self.layer_norm = nn.LayerNorm(d_model, eps=1e-6)
         self.dropout = nn.Dropout(dropout)
@@ -83,14 +89,15 @@ class TransformerEncoder(EncoderBase):
     """
 
     def __init__(self, num_layers, d_model, heads, d_ff, dropout, embeddings,
-                 max_relative_positions, conv_first):
+                 max_relative_positions, conv_first, strided_attn):
         super(TransformerEncoder, self).__init__()
 
         self.embeddings = embeddings
         self.transformer = nn.ModuleList(
             [TransformerEncoderLayer(
                 d_model, heads, d_ff, dropout,
-                max_relative_positions=max_relative_positions)
+                max_relative_positions=max_relative_positions,
+                strided_attn=strided_attn)
              for i in range(num_layers)])
         self.layer_norm = nn.LayerNorm(d_model, eps=1e-6)
         self.conv_first = conv_first
@@ -108,7 +115,8 @@ class TransformerEncoder(EncoderBase):
             opt.dropout,
             embeddings,
             opt.max_relative_positions,
-            opt.conv_first)
+            opt.conv_first,
+            opt.strided_attn)
 
     def forward(self, src, lengths=None):
         """See :func:`EncoderBase.forward()`"""
