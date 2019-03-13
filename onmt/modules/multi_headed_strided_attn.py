@@ -156,19 +156,19 @@ class MultiHeadedStridedAttention(nn.Module):
         key_len = key.size(2)
         query_len = query.size(2)
 
-        if query is not None: print("Query Shape", query.shape)
-        print("Dim_per_head", dim_per_head)
-        if key is not None: print("Key Shape", key.shape)
-        if relations_keys is not None: print("Relations Keys Shape", relations_keys.shape)
-        if mask is not None: print("Mask Shape", mask.shape)
-        if value is not None: print("Value Shape", value.shape)
-        if relations_values is not None: print("Relations Values Shape", relations_values.shape)
-        print("Batch Size", batch_size)
-        print("Head Count", head_count)
-        print("Query Len", query_len)
-        print("Key Len", key_len)
-
-        raise "TEST"
+        # Query: 10, 8, 400, 64
+        # dim_per_head: 64
+        # Key: 10, 8, 400, 64
+        # Mask: 10, 1, 400
+        # Value: 10, 8, 400, 64
+        # Batch size: 10
+        # Head Count: 8
+        # Query Len: 400
+        # Key Len: 400
+        if relations_keys is not None: 
+          print("Relations Keys Shape", relations_keys.shape)
+          print("Relations Values Shape", relations_values.shape)
+          raise "TEST"
 
         output, top_attn = self.perform_attention(query, dim_per_head, 
                           key, relations_keys, mask, 
