@@ -157,42 +157,31 @@ class MultiHeadedStridedAttention(nn.Module):
         key_len = key.size(2)
         query_len = query.size(2)
 
-        # dim_per_head: 64
-        # Batch size: 10
-        # Head Count: 8
-        # Query Len: 400
-        # Key Len: 400
-        query_lens = [query_len// 3, query_len//3, query_len - ((query_len//3)*2)] #[query_len//3 * 2, query_len//3 * 2, query_len - ((query_len // 3) * 4)]
+
+        splice_inds = [[0, query_len//2], [query_len//4, ((query_len//4)*3)], [query_len//2, query_len]]
 
         outputs = []
         top_attns = []
-
-        # Query: 10, 8, 400, 64
-        # Key: 10, 8, 400, 64
-        # Value: 10, 8, 400, 64
-        # Mask: 10, 1, 400
-        # Output: 10, 400, 512
-        # Top_attn: 10, 400, 400
-        count = 0
-        for q_len in query_lens:
-          query_split = query[:, :, count:count+q_len, :]
-          key_split = key[:, :, count:count+q_len, :]
-          value_split = value[:, :, count:count+q_len, :]
-          mask_split = mask[:, :, count:count+q_len]
+        for splice in splice_inds:
+          query_split = query[:, :, splice[0]:splice[1], :]
+          key_split = key[:, :, splice[0]:splice[1], :]
+          value_split = value[:, :, splice[0]:splice[1], :]
+          mask_split = mask[:, :, splice[0]:splice[1]]
           output, top_attn = self.perform_attention(query_split, dim_per_head, key_split, relations_keys, mask_split, value_split, relations_values, batch_size, head_count, q_len, q_len, shape, unshape)
           outputs.append(output)
           top_attns.append(top_attn)
-          count += q_len
 
-        output = torch.cat(outputs, dim=1)
-        top_attn = torch.zeros((query.shape[0], query.shape[2], query.shape[2]))#.cuda() TODO: uncomment for running on GPU
+        # TODO: add .cuda() after to run on GPU
+        output = torch.zeros((query.shape[0], query.shape[2], outputs[0].shape[2]))
+        output[:, splice_inds[1][0]:splice_inds[1][1], :] = outputs[1]
+        output[:, 0:(outputs[0].shape[1]//3)*2, :] = outputs[0][:, 0:(outputs[0].shape[1]//3)*2, :]
 
-        count = 0
-        i = 0
-        for q_len in query_lens:
-          top_attn[:, count:count+q_len, count:count+q_len] = top_attns[i]
-          count += q_len
-          i += 1
+        amt = (outputs[2].shape[1]//3)*2
+        output[:, -amt:, :] = outputs[2][:, -amt:, :]
+
+        print(output.shape)
+        print(output[0, :, 0])
+        raise "TEST"
 
         return output, top_attn
 
