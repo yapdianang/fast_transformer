@@ -1,0 +1,24 @@
+[2019-03-12 19:18:39,397 INFO] Extracting features...
+[2019-03-12 19:18:39,398 INFO]  * number of source features: 0.
+[2019-03-12 19:18:39,398 INFO]  * number of target features: 0.
+[2019-03-12 19:18:39,398 INFO] Building `Fields` object...
+[2019-03-12 19:18:39,398 INFO] Building & saving training data...
+[2019-03-12 19:18:39,398 INFO] Reading source and target files: data/cnndm/train.txt.src data/cnndm/train.txt.tgt.tagged.
+[2019-03-12 19:18:39,982 INFO] Building shard 0.
+[2019-03-12 19:19:44,813 INFO]  * saving 0th train data shard to data/cnndm/CNNDM.train.0.pt.
+[2019-03-12 19:21:38,375 INFO] Building shard 1.
+[2019-03-12 19:22:40,518 INFO]  * saving 1th train data shard to data/cnndm/CNNDM.train.1.pt.
+[2019-03-12 19:24:36,869 INFO] Building shard 2.
+[2019-03-12 19:25:31,925 INFO]  * saving 2th train data shard to data/cnndm/CNNDM.train.2.pt.
+[2019-03-12 19:27:10,107 INFO] Building & saving validation data...
+[2019-03-12 19:27:10,107 INFO] Reading source and target files: data/cnndm/val.txt.src data/cnndm/val.txt.tgt.tagged.
+[2019-03-12 19:27:10,170 INFO] Building shard 0.
+[2019-03-12 19:27:17,237 INFO]  * saving 0th valid data shard to data/cnndm/CNNDM.valid.0.pt.
+[2019-03-12 19:27:32,257 INFO] Building & saving vocabulary...
+[2019-03-12 19:28:04,943 INFO]  * reloading data/cnndm/CNNDM.train.0.pt.
+[2019-03-12 19:28:52,047 INFO]  * reloading data/cnndm/CNNDM.train.1.pt.
+[2019-03-12 19:29:38,892 INFO]  * reloading data/cnndm/CNNDM.train.2.pt.
+[2019-03-12 19:29:47,285 INFO]  * tgt vocab size: 50004.
+[2019-03-12 19:29:48,901 INFO]  * src vocab size: 50002.
+[2019-03-12 19:29:48,901 INFO]  * merging src and tgt vocab...
+[2019-03-12 19:29:51,570 INFO]  * merged vocab size: 50004.

@@ -1,0 +1,439 @@
+[2019-03-12 21:55:53,323 INFO]  * src vocab size = 50004
+[2019-03-12 21:55:53,323 INFO]  * tgt vocab size = 50004
+[2019-03-12 21:55:53,323 INFO] Building model...
+[2019-03-12 21:55:59,713 INFO] NMTModel(
+  (encoder): TransformerEncoder(
+    (embeddings): Embeddings(
+      (make_embedding): Sequential(
+        (emb_luts): Elementwise(
+          (0): Embedding(50004, 512, padding_idx=1)
+        )
+        (pe): PositionalEncoding(
+          (dropout): Dropout(p=0.2)
+        )
+      )
+    )
+    (transformer): ModuleList(
+      (0): TransformerEncoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+          (dropout_1): Dropout(p=0.2)
+          (relu): ReLU()
+          (dropout_2): Dropout(p=0.2)
+        )
+        (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (dropout): Dropout(p=0.2)
+      )
+      (1): TransformerEncoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+          (dropout_1): Dropout(p=0.2)
+          (relu): ReLU()
+          (dropout_2): Dropout(p=0.2)
+        )
+        (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (dropout): Dropout(p=0.2)
+      )
+      (2): TransformerEncoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+          (dropout_1): Dropout(p=0.2)
+          (relu): ReLU()
+          (dropout_2): Dropout(p=0.2)
+        )
+        (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (dropout): Dropout(p=0.2)
+      )
+      (3): TransformerEncoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+          (dropout_1): Dropout(p=0.2)
+          (relu): ReLU()
+          (dropout_2): Dropout(p=0.2)
+        )
+        (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (dropout): Dropout(p=0.2)
+      )
+    )
+    (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+    (conv1d): Conv1d(512, 512, kernel_size=(3,), stride=(3,))
+    (mask_pool): MaxPool1d(kernel_size=3, stride=3, padding=0, dilation=1, ceil_mode=False)
+  )
+  (decoder): TransformerDecoder(
+    (embeddings): Embeddings(
+      (make_embedding): Sequential(
+        (emb_luts): Elementwise(
+          (0): Embedding(50004, 512, padding_idx=1)
+        )
+        (pe): PositionalEncoding(
+          (dropout): Dropout(p=0.2)
+        )
+      )
+    )
+    (transformer_layers): ModuleList(
+      (0): TransformerDecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (context_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+          (dropout_1): Dropout(p=0.2)
+          (relu): ReLU()
+          (dropout_2): Dropout(p=0.2)
+        )
+        (layer_norm_1): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (layer_norm_2): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (drop): Dropout(p=0.2)
+      )
+      (1): TransformerDecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (context_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+          (dropout_1): Dropout(p=0.2)
+          (relu): ReLU()
+          (dropout_2): Dropout(p=0.2)
+        )
+        (layer_norm_1): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (layer_norm_2): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (drop): Dropout(p=0.2)
+      )
+      (2): TransformerDecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (context_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+          (dropout_1): Dropout(p=0.2)
+          (relu): ReLU()
+          (dropout_2): Dropout(p=0.2)
+        )
+        (layer_norm_1): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (layer_norm_2): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (drop): Dropout(p=0.2)
+      )
+      (3): TransformerDecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (context_attn): MultiHeadedAttention(
+          (linear_keys): Linear(in_features=512, out_features=512, bias=True)
+          (linear_values): Linear(in_features=512, out_features=512, bias=True)
+          (linear_query): Linear(in_features=512, out_features=512, bias=True)
+          (softmax): Softmax()
+          (dropout): Dropout(p=0.2)
+          (final_linear): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+          (dropout_1): Dropout(p=0.2)
+          (relu): ReLU()
+          (dropout_2): Dropout(p=0.2)
+        )
+        (layer_norm_1): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (layer_norm_2): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+        (drop): Dropout(p=0.2)
+      )
+    )
+    (layer_norm): LayerNorm(torch.Size([512]), eps=1e-06, elementwise_affine=True)
+    (mask_pool): MaxPool1d(kernel_size=3, stride=3, padding=0, dilation=1, ceil_mode=False)
+  )
+  (generator): CopyGenerator(
+    (linear): Linear(in_features=512, out_features=50004, bias=True)
+    (linear_copy): Linear(in_features=512, out_features=1, bias=True)
+    (conv_transpose): ConvTranspose1d(1, 1, kernel_size=(3,), stride=(3,))
+    (conv_transpose_pad1): ConvTranspose1d(1, 1, kernel_size=(3,), stride=(3,), output_padding=(1,))
+    (conv_transpose_pad2): ConvTranspose1d(1, 1, kernel_size=(3,), stride=(3,), output_padding=(2,))
+  )
+)
+[2019-03-12 21:55:59,715 INFO] encoder: 38999552
+[2019-03-12 21:55:59,716 INFO] decoder: 42469729
+[2019-03-12 21:55:59,716 INFO] * number of parameters: 81469281
+[2019-03-12 21:55:59,718 INFO] Starting training on GPU: [0, 1]
+[2019-03-12 21:55:59,718 INFO] Start training loop and validate every 10000 steps...
+[2019-03-12 21:56:35,567 INFO] Loading dataset from data/cnndm/CNNDM.train.0.pt, number of examples: 99886
+/data/anaconda/envs/py35/lib/python3.5/site-packages/torchtext/data/field.py:359: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  var = torch.tensor(arr, dtype=self.dtype, device=device)
+[2019-03-12 21:58:56,198 INFO] Step 50/200000; acc:   0.30; ppl: 280.23; xent: 5.64; lr: 0.00001; 9044/1328 tok/s;    176 sec
+[2019-03-12 22:01:15,439 INFO] Step 100/200000; acc:   1.24; ppl: 689015.23; xent: 13.44; lr: 0.00001; 11441/1672 tok/s;    316 sec
+[2019-03-12 22:03:36,752 INFO] Step 150/200000; acc:   2.97; ppl: 489062.65; xent: 13.10; lr: 0.00002; 11283/1720 tok/s;    457 sec
+[2019-03-12 22:05:57,184 INFO] Step 200/200000; acc:   3.50; ppl: 342745.34; xent: 12.74; lr: 0.00002; 11356/1686 tok/s;    597 sec
+[2019-03-12 22:08:15,106 INFO] Step 250/200000; acc:   2.87; ppl: 240340.23; xent: 12.39; lr: 0.00003; 11560/1703 tok/s;    735 sec
+[2019-03-12 22:10:35,913 INFO] Step 300/200000; acc:   1.34; ppl: 153025.46; xent: 11.94; lr: 0.00004; 11328/1695 tok/s;    876 sec
+[2019-03-12 22:12:56,033 INFO] Step 350/200000; acc:   1.17; ppl: 102466.11; xent: 11.54; lr: 0.00004; 11377/1696 tok/s;   1016 sec
+[2019-03-12 22:15:14,456 INFO] Step 400/200000; acc:   1.27; ppl: 63065.71; xent: 11.05; lr: 0.00005; 11520/1704 tok/s;   1155 sec
+[2019-03-12 22:17:33,764 INFO] Step 450/200000; acc:   1.36; ppl: 44589.29; xent: 10.71; lr: 0.00006; 11455/1673 tok/s;   1294 sec
+[2019-03-12 22:19:52,177 INFO] Step 500/200000; acc:   1.39; ppl: 29848.35; xent: 10.30; lr: 0.00006; 11520/1714 tok/s;   1432 sec
+[2019-03-12 22:22:10,112 INFO] Step 550/200000; acc:   2.02; ppl: 24162.59; xent: 10.09; lr: 0.00007; 11562/1689 tok/s;   1570 sec
+[2019-03-12 22:24:36,516 INFO] Step 600/200000; acc:   2.93; ppl: 18507.30; xent: 9.83; lr: 0.00007; 10902/1657 tok/s;   1717 sec
+[2019-03-12 22:26:57,208 INFO] Step 650/200000; acc:   4.93; ppl: 13249.30; xent: 9.49; lr: 0.00008; 11329/1699 tok/s;   1857 sec
+[2019-03-12 22:29:18,145 INFO] Step 700/200000; acc:   5.96; ppl: 11040.53; xent: 9.31; lr: 0.00009; 11312/1709 tok/s;   1998 sec
+[2019-03-12 22:31:37,081 INFO] Step 750/200000; acc:   3.38; ppl: 10829.73; xent: 9.29; lr: 0.00009; 11479/1701 tok/s;   2137 sec
+[2019-03-12 22:33:54,837 INFO] Step 800/200000; acc:   2.58; ppl: 9415.20; xent: 9.15; lr: 0.00010; 11585/1713 tok/s;   2275 sec
+[2019-03-12 22:36:13,360 INFO] Step 850/200000; acc:   5.85; ppl: 8656.27; xent: 9.07; lr: 0.00011; 11524/1689 tok/s;   2414 sec
+[2019-03-12 22:38:33,088 INFO] Step 900/200000; acc:   5.02; ppl: 8812.55; xent: 9.08; lr: 0.00011; 11424/1674 tok/s;   2553 sec
+[2019-03-12 22:40:53,531 INFO] Step 950/200000; acc:   4.09; ppl: 9092.93; xent: 9.12; lr: 0.00012; 11359/1637 tok/s;   2694 sec
+[2019-03-12 22:43:15,102 INFO] Step 1000/200000; acc:   4.06; ppl: 8630.67; xent: 9.06; lr: 0.00012; 11274/1702 tok/s;   2835 sec
+[2019-03-12 22:45:31,449 INFO] Step 1050/200000; acc:   3.18; ppl: 8211.90; xent: 9.01; lr: 0.00013; 11676/1716 tok/s;   2972 sec
+[2019-03-12 22:47:50,846 INFO] Step 1100/200000; acc:   4.17; ppl: 8461.43; xent: 9.04; lr: 0.00014; 11436/1719 tok/s;   3111 sec
+[2019-03-12 22:50:10,882 INFO] Step 1150/200000; acc:   3.35; ppl: 8460.52; xent: 9.04; lr: 0.00014; 11387/1695 tok/s;   3251 sec
+[2019-03-12 22:52:43,797 INFO] Loading dataset from data/cnndm/CNNDM.train.1.pt, number of examples: 100000
+[2019-03-12 22:53:23,515 INFO] Step 1200/200000; acc:   2.14; ppl: 8491.39; xent: 9.05; lr: 0.00015; 8284/1238 tok/s;   3444 sec
+[2019-03-12 22:55:54,691 INFO] Step 1250/200000; acc:   2.13; ppl: 9626.29; xent: 9.17; lr: 0.00015; 10560/1670 tok/s;   3595 sec
+[2019-03-12 22:58:22,717 INFO] Step 1300/200000; acc:   2.76; ppl: 9630.20; xent: 9.17; lr: 0.00016; 10789/1684 tok/s;   3743 sec
+[2019-03-12 23:00:58,878 INFO] Step 1350/200000; acc:   1.57; ppl: 9706.15; xent: 9.18; lr: 0.00017; 10221/1652 tok/s;   3899 sec
+[2019-03-12 23:03:33,641 INFO] Step 1400/200000; acc:   1.75; ppl: 10543.96; xent: 9.26; lr: 0.00017; 10319/1660 tok/s;   4054 sec
+[2019-03-12 23:06:03,087 INFO] Step 1450/200000; acc:   1.63; ppl: 9586.55; xent: 9.17; lr: 0.00018; 10687/1670 tok/s;   4203 sec
+[2019-03-12 23:08:33,695 INFO] Step 1500/200000; acc:   2.22; ppl: 8961.86; xent: 9.10; lr: 0.00019; 10588/1688 tok/s;   4354 sec
+[2019-03-12 23:11:02,937 INFO] Step 1550/200000; acc:   2.26; ppl: 17003.20; xent: 9.74; lr: 0.00019; 10702/1683 tok/s;   4503 sec
+[2019-03-12 23:13:33,608 INFO] Step 1600/200000; acc:   2.90; ppl: 12499.82; xent: 9.43; lr: 0.00020; 10592/1654 tok/s;   4654 sec
+[2019-03-12 23:16:11,023 INFO] Step 1650/200000; acc:   3.61; ppl: 9568.11; xent: 9.17; lr: 0.00020; 10149/1646 tok/s;   4811 sec
+[2019-03-12 23:18:43,385 INFO] Step 1700/200000; acc:   3.39; ppl: 7544.53; xent: 8.93; lr: 0.00021; 10473/1654 tok/s;   4964 sec
+[2019-03-12 23:21:19,691 INFO] Step 1750/200000; acc:   5.03; ppl: 6781.77; xent: 8.82; lr: 0.00022; 10216/1653 tok/s;   5120 sec
+[2019-03-12 23:23:53,880 INFO] Step 1800/200000; acc:   6.34; ppl: 6264.31; xent: 8.74; lr: 0.00022; 10359/1655 tok/s;   5274 sec
+[2019-03-12 23:26:27,846 INFO] Step 1850/200000; acc:   6.91; ppl: 6435.93; xent: 8.77; lr: 0.00023; 10366/1684 tok/s;   5428 sec
+[2019-03-12 23:28:58,632 INFO] Step 1900/200000; acc:   6.76; ppl: 6363.48; xent: 8.76; lr: 0.00023; 10585/1682 tok/s;   5579 sec
+[2019-03-12 23:31:33,045 INFO] Step 1950/200000; acc:   6.98; ppl: 7970.17; xent: 8.98; lr: 0.00024; 10342/1627 tok/s;   5733 sec
+[2019-03-12 23:34:04,344 INFO] Step 2000/200000; acc:   7.82; ppl: 6536.86; xent: 8.79; lr: 0.00025; 10557/1697 tok/s;   5885 sec
+[2019-03-12 23:36:35,754 INFO] Step 2050/200000; acc:   8.51; ppl: 8437.15; xent: 9.04; lr: 0.00025; 10540/1685 tok/s;   6036 sec
+[2019-03-12 23:39:05,791 INFO] Step 2100/200000; acc:   8.52; ppl: 5973.15; xent: 8.70; lr: 0.00026; 10643/1671 tok/s;   6186 sec
+[2019-03-12 23:41:37,526 INFO] Step 2150/200000; acc:   9.28; ppl: 5525.46; xent: 8.62; lr: 0.00027; 10519/1692 tok/s;   6338 sec
+[2019-03-12 23:44:03,714 INFO] Step 2200/200000; acc:   8.61; ppl: 5097.95; xent: 8.54; lr: 0.00027; 10907/1683 tok/s;   6484 sec
+[2019-03-12 23:46:32,190 INFO] Step 2250/200000; acc:   7.03; ppl: 5800.18; xent: 8.67; lr: 0.00028; 10758/1669 tok/s;   6632 sec
+[2019-03-12 23:49:02,039 INFO] Step 2300/200000; acc:   4.51; ppl: 7629.09; xent: 8.94; lr: 0.00028; 10661/1687 tok/s;   6782 sec
+[2019-03-12 23:51:29,310 INFO] Step 2350/200000; acc:   5.65; ppl: 5288.31; xent: 8.57; lr: 0.00029; 10846/1693 tok/s;   6930 sec
+[2019-03-12 23:53:59,314 INFO] Step 2400/200000; acc:   6.91; ppl: 7461.32; xent: 8.92; lr: 0.00030; 10653/1689 tok/s;   7080 sec
+[2019-03-12 23:55:28,349 INFO] Loading dataset from data/cnndm/CNNDM.train.2.pt, number of examples: 87227
+[2019-03-12 23:57:23,712 INFO] Step 2450/200000; acc:   6.65; ppl: 6608.34; xent: 8.80; lr: 0.00030; 7810/1313 tok/s;   7284 sec
+[2019-03-13 00:00:01,186 INFO] Step 2500/200000; acc:   7.28; ppl: 5971.41; xent: 8.69; lr: 0.00031; 10125/1769 tok/s;   7441 sec
+[2019-03-13 00:02:39,960 INFO] Step 2550/200000; acc:   8.10; ppl: 5200.77; xent: 8.56; lr: 0.00032; 10052/1761 tok/s;   7600 sec
+[2019-03-13 00:05:26,255 INFO] Step 2600/200000; acc:   9.86; ppl: 5021.73; xent: 8.52; lr: 0.00032; 9587/1698 tok/s;   7767 sec
+[2019-03-13 00:08:08,119 INFO] Step 2650/200000; acc:  11.57; ppl: 4679.50; xent: 8.45; lr: 0.00033; 9867/1731 tok/s;   7928 sec
+[2019-03-13 00:10:47,801 INFO] Step 2700/200000; acc:  12.95; ppl: 4498.27; xent: 8.41; lr: 0.00033; 10000/1754 tok/s;   8088 sec
+[2019-03-13 00:13:29,220 INFO] Step 2750/200000; acc:  14.26; ppl: 4398.26; xent: 8.39; lr: 0.00034; 9885/1719 tok/s;   8250 sec
+[2019-03-13 00:16:12,355 INFO] Step 2800/200000; acc:  15.21; ppl: 4230.38; xent: 8.35; lr: 0.00035; 9781/1711 tok/s;   8413 sec
+[2019-03-13 00:18:51,461 INFO] Step 2850/200000; acc:  13.15; ppl: 4379.25; xent: 8.38; lr: 0.00035; 10037/1748 tok/s;   8572 sec
+[2019-03-13 00:21:35,807 INFO] Step 2900/200000; acc:  14.13; ppl: 4210.44; xent: 8.35; lr: 0.00036; 9710/1694 tok/s;   8736 sec
+[2019-03-13 00:24:16,720 INFO] Step 2950/200000; acc:  16.05; ppl: 3733.35; xent: 8.23; lr: 0.00036; 9919/1767 tok/s;   8897 sec
+[2019-03-13 00:26:54,250 INFO] Step 3000/200000; acc:  11.70; ppl: 4494.65; xent: 8.41; lr: 0.00037; 10121/1782 tok/s;   9055 sec
+[2019-03-13 00:29:34,169 INFO] Step 3050/200000; acc:  14.21; ppl: 4100.81; xent: 8.32; lr: 0.00038; 9987/1723 tok/s;   9214 sec
+[2019-03-13 00:32:21,592 INFO] Step 3100/200000; acc:  16.84; ppl: 3583.92; xent: 8.18; lr: 0.00038; 9526/1695 tok/s;   9382 sec
+[2019-03-13 00:35:00,630 INFO] Step 3150/200000; acc:  17.07; ppl: 3506.49; xent: 8.16; lr: 0.00039; 10035/1798 tok/s;   9541 sec
+[2019-03-13 00:37:36,032 INFO] Step 3200/200000; acc:  16.64; ppl: 3632.19; xent: 8.20; lr: 0.00040; 10271/1764 tok/s;   9696 sec
+[2019-03-13 00:40:17,347 INFO] Step 3250/200000; acc:  13.83; ppl: 4019.29; xent: 8.30; lr: 0.00040; 9903/1773 tok/s;   9858 sec
+[2019-03-13 00:42:53,356 INFO] Step 3300/200000; acc:  16.91; ppl: 3512.86; xent: 8.16; lr: 0.00041; 10233/1756 tok/s;  10014 sec
+[2019-03-13 00:45:29,803 INFO] Step 3350/200000; acc:  17.67; ppl: 3628.49; xent: 8.20; lr: 0.00041; 10202/1746 tok/s;  10170 sec
+[2019-03-13 00:48:07,880 INFO] Step 3400/200000; acc:  16.65; ppl: 3636.25; xent: 8.20; lr: 0.00042; 10085/1775 tok/s;  10328 sec
+[2019-03-13 00:50:45,754 INFO] Step 3450/200000; acc:  16.49; ppl: 3714.06; xent: 8.22; lr: 0.00043; 10105/1765 tok/s;  10486 sec
+[2019-03-13 00:53:02,562 INFO] Loading dataset from data/cnndm/CNNDM.train.0.pt, number of examples: 99886
+[2019-03-13 00:54:13,245 INFO] Step 3500/200000; acc:  18.45; ppl: 3586.58; xent: 8.18; lr: 0.00043; 7685/1259 tok/s;  10694 sec
+[2019-03-13 00:56:32,276 INFO] Step 3550/200000; acc:  17.56; ppl: 3897.38; xent: 8.27; lr: 0.00044; 11478/1719 tok/s;  10833 sec
+[2019-03-13 00:58:48,878 INFO] Step 3600/200000; acc:  18.42; ppl: 3987.49; xent: 8.29; lr: 0.00044; 11681/1719 tok/s;  10969 sec
+[2019-03-13 01:01:08,115 INFO] Step 3650/200000; acc:  19.80; ppl: 3353.58; xent: 8.12; lr: 0.00045; 11448/1733 tok/s;  11108 sec
+[2019-03-13 01:03:32,062 INFO] Step 3700/200000; acc:  11.24; ppl: 4323.00; xent: 8.37; lr: 0.00046; 11076/1656 tok/s;  11252 sec
+[2019-03-13 01:05:47,472 INFO] Step 3750/200000; acc:  10.42; ppl: 4808.43; xent: 8.48; lr: 0.00046; 11782/1696 tok/s;  11388 sec
+[2019-03-13 01:08:06,309 INFO] Step 3800/200000; acc:  16.49; ppl: 4207.33; xent: 8.34; lr: 0.00047; 11490/1708 tok/s;  11527 sec
+[2019-03-13 01:10:26,318 INFO] Step 3850/200000; acc:  16.63; ppl: 4222.59; xent: 8.35; lr: 0.00048; 11401/1724 tok/s;  11667 sec
+[2019-03-13 01:12:43,092 INFO] Step 3900/200000; acc:  16.49; ppl: 4061.38; xent: 8.31; lr: 0.00048; 11670/1710 tok/s;  11803 sec
+[2019-03-13 01:15:02,353 INFO] Step 3950/200000; acc:  16.54; ppl: 4660.28; xent: 8.45; lr: 0.00049; 11448/1740 tok/s;  11943 sec
+[2019-03-13 01:17:22,108 INFO] Step 4000/200000; acc:  16.63; ppl: 4232.45; xent: 8.35; lr: 0.00049; 11418/1717 tok/s;  12082 sec
+[2019-03-13 01:19:39,244 INFO] Step 4050/200000; acc:  16.81; ppl: 3978.23; xent: 8.29; lr: 0.00050; 11629/1751 tok/s;  12220 sec
+[2019-03-13 01:22:00,958 INFO] Step 4100/200000; acc:  16.71; ppl: 3849.36; xent: 8.26; lr: 0.00051; 11258/1684 tok/s;  12361 sec
+[2019-03-13 01:24:20,038 INFO] Step 4150/200000; acc:  16.86; ppl: 3777.32; xent: 8.24; lr: 0.00051; 11459/1749 tok/s;  12500 sec
+[2019-03-13 01:26:38,138 INFO] Step 4200/200000; acc:  17.30; ppl: 3693.79; xent: 8.21; lr: 0.00052; 11530/1690 tok/s;  12638 sec
+[2019-03-13 01:29:02,751 INFO] Step 4250/200000; acc:  17.31; ppl: 3659.31; xent: 8.21; lr: 0.00053; 11023/1639 tok/s;  12783 sec
+[2019-03-13 01:31:23,202 INFO] Step 4300/200000; acc:  17.73; ppl: 3620.79; xent: 8.19; lr: 0.00053; 11354/1699 tok/s;  12923 sec
+[2019-03-13 01:33:44,894 INFO] Step 4350/200000; acc:  17.63; ppl: 3657.74; xent: 8.20; lr: 0.00054; 11263/1683 tok/s;  13065 sec
+[2019-03-13 01:36:01,317 INFO] Step 4400/200000; acc:  17.90; ppl: 3688.92; xent: 8.21; lr: 0.00054; 11695/1712 tok/s;  13202 sec
+[2019-03-13 01:38:19,992 INFO] Step 4450/200000; acc:  17.30; ppl: 3644.70; xent: 8.20; lr: 0.00055; 11503/1719 tok/s;  13340 sec
+[2019-03-13 01:40:39,720 INFO] Step 4500/200000; acc:  17.15; ppl: 3650.54; xent: 8.20; lr: 0.00056; 11406/1742 tok/s;  13480 sec
+[2019-03-13 01:42:59,202 INFO] Step 4550/200000; acc:  18.16; ppl: 3573.77; xent: 8.18; lr: 0.00056; 11440/1709 tok/s;  13619 sec
+[2019-03-13 01:45:17,237 INFO] Step 4600/200000; acc:  18.30; ppl: 3399.92; xent: 8.13; lr: 0.00057; 11544/1711 tok/s;  13758 sec
+[2019-03-13 01:47:33,812 INFO] Step 4650/200000; acc:  18.29; ppl: 3464.69; xent: 8.15; lr: 0.00057; 11661/1726 tok/s;  13894 sec
+[2019-03-13 01:49:00,662 INFO] Loading dataset from data/cnndm/CNNDM.train.1.pt, number of examples: 100000
+[2019-03-13 01:50:49,855 INFO] Step 4700/200000; acc:  17.45; ppl: 4128.28; xent: 8.33; lr: 0.00058; 8146/1274 tok/s;  14090 sec
+[2019-03-13 01:53:16,920 INFO] Step 4750/200000; acc:  16.94; ppl: 3613.07; xent: 8.19; lr: 0.00059; 10856/1717 tok/s;  14237 sec
+[2019-03-13 01:55:41,823 INFO] Step 4800/200000; acc:  14.87; ppl: 168.83; xent: 5.13; lr: 0.00059; 11018/1715 tok/s;  14382 sec
+[2019-03-13 01:58:08,961 INFO] Step 4850/200000; acc:  14.18; ppl: 86.43; xent: 4.46; lr: 0.00060; 10851/1736 tok/s;  14529 sec
+[2019-03-13 02:00:36,124 INFO] Step 4900/200000; acc:  14.84; ppl: 63.17; xent: 4.15; lr: 0.00061; 10857/1706 tok/s;  14676 sec
+[2019-03-13 02:03:04,395 INFO] Step 4950/200000; acc:  14.89; ppl: 59.16; xent: 4.08; lr: 0.00061; 10757/1676 tok/s;  14825 sec
+[2019-03-13 02:05:32,802 INFO] Step 5000/200000; acc:  15.20; ppl: 84.24; xent: 4.43; lr: 0.00062; 10762/1733 tok/s;  14973 sec
+[2019-03-13 02:05:32,803 INFO] Saving checkpoint models/cnndm_step_5000.pt
+[2019-03-13 02:08:03,220 INFO] Step 5050/200000; acc:  14.27; ppl: 135.17; xent: 4.91; lr: 0.00062; 10620/1712 tok/s;  15124 sec
+[2019-03-13 02:10:28,547 INFO] Step 5100/200000; acc:  15.02; ppl: 45.21; xent: 3.81; lr: 0.00063; 10985/1721 tok/s;  15269 sec
+[2019-03-13 02:12:55,488 INFO] Step 5150/200000; acc:  14.96; ppl: 43.50; xent: 3.77; lr: 0.00064; 10862/1742 tok/s;  15416 sec
+[2019-03-13 02:15:28,977 INFO] Step 5200/200000; acc:  15.26; ppl: 44.16; xent: 3.79; lr: 0.00064; 10411/1678 tok/s;  15569 sec
+[2019-03-13 02:17:58,929 INFO] Step 5250/200000; acc:  15.15; ppl: 39.20; xent: 3.67; lr: 0.00065; 10643/1739 tok/s;  15719 sec
+[2019-03-13 02:20:26,190 INFO] Step 5300/200000; acc:  15.29; ppl: 35.55; xent: 3.57; lr: 0.00065; 10833/1728 tok/s;  15866 sec
+[2019-03-13 02:22:55,782 INFO] Step 5350/200000; acc:  15.20; ppl: 36.20; xent: 3.59; lr: 0.00066; 10674/1716 tok/s;  16016 sec
+[2019-03-13 02:25:21,897 INFO] Step 5400/200000; acc:  15.26; ppl: 35.26; xent: 3.56; lr: 0.00067; 10936/1725 tok/s;  16162 sec
+[2019-03-13 02:27:52,154 INFO] Step 5450/200000; acc:  15.39; ppl: 32.30; xent: 3.48; lr: 0.00067; 10628/1718 tok/s;  16312 sec
+[2019-03-13 02:30:20,042 INFO] Step 5500/200000; acc:  13.00; ppl: 34.50; xent: 3.54; lr: 0.00068; 10802/1725 tok/s;  16460 sec
+[2019-03-13 02:32:49,960 INFO] Step 5550/200000; acc:  14.96; ppl: 36.12; xent: 3.59; lr: 0.00069; 10656/1714 tok/s;  16610 sec
+[2019-03-13 02:35:17,687 INFO] Step 5600/200000; acc:  15.36; ppl: 33.12; xent: 3.50; lr: 0.00069; 10808/1696 tok/s;  16758 sec
+[2019-03-13 02:37:46,259 INFO] Step 5650/200000; acc:  15.50; ppl: 27.90; xent: 3.33; lr: 0.00070; 10739/1741 tok/s;  16907 sec
+[2019-03-13 02:40:11,391 INFO] Step 5700/200000; acc:  15.58; ppl: 26.78; xent: 3.29; lr: 0.00070; 10994/1738 tok/s;  17052 sec
+[2019-03-13 02:42:39,582 INFO] Step 5750/200000; acc:  15.63; ppl: 25.72; xent: 3.25; lr: 0.00071; 10775/1710 tok/s;  17200 sec
+[2019-03-13 02:45:07,080 INFO] Step 5800/200000; acc:  15.61; ppl: 27.07; xent: 3.30; lr: 0.00072; 10830/1728 tok/s;  17347 sec
+[2019-03-13 02:47:33,221 INFO] Step 5850/200000; acc:  15.61; ppl: 25.13; xent: 3.22; lr: 0.00072; 10929/1701 tok/s;  17494 sec
+[2019-03-13 02:50:16,091 INFO] Loading dataset from data/cnndm/CNNDM.train.2.pt, number of examples: 87227
+[2019-03-13 02:50:51,682 INFO] Step 5900/200000; acc:  15.35; ppl: 25.13; xent: 3.22; lr: 0.00073; 8051/1333 tok/s;  17692 sec
+[2019-03-13 02:53:24,685 INFO] Step 5950/200000; acc:  14.34; ppl: 31.99; xent: 3.47; lr: 0.00074; 10421/1808 tok/s;  17845 sec
+[2019-03-13 02:56:00,780 INFO] Step 6000/200000; acc:  14.59; ppl: 22.77; xent: 3.13; lr: 0.00074; 10230/1796 tok/s;  18001 sec
+[2019-03-13 02:58:39,307 INFO] Step 6050/200000; acc:  15.04; ppl: 22.60; xent: 3.12; lr: 0.00075; 10062/1793 tok/s;  18160 sec
+[2019-03-13 03:01:15,975 INFO] Step 6100/200000; acc:  14.98; ppl: 21.64; xent: 3.07; lr: 0.00075; 10183/1778 tok/s;  18316 sec
+[2019-03-13 03:03:55,077 INFO] Step 6150/200000; acc:  14.90; ppl: 22.08; xent: 3.09; lr: 0.00076; 10027/1790 tok/s;  18475 sec
+[2019-03-13 03:06:35,515 INFO] Step 6200/200000; acc:  14.66; ppl: 21.58; xent: 3.07; lr: 0.00077; 9951/1764 tok/s;  18636 sec
+[2019-03-13 03:09:12,281 INFO] Step 6250/200000; acc:  13.99; ppl: 20.12; xent: 3.00; lr: 0.00077; 10180/1769 tok/s;  18793 sec
+[2019-03-13 03:11:53,358 INFO] Step 6300/200000; acc:  14.56; ppl: 20.29; xent: 3.01; lr: 0.00078; 9917/1789 tok/s;  18954 sec
+[2019-03-13 03:14:29,967 INFO] Step 6350/200000; acc:  14.89; ppl: 21.33; xent: 3.06; lr: 0.00078; 10195/1790 tok/s;  19110 sec
+[2019-03-13 03:17:08,136 INFO] Step 6400/200000; acc:  14.86; ppl: 19.33; xent: 2.96; lr: 0.00079; 10084/1781 tok/s;  19268 sec
+[2019-03-13 03:19:44,898 INFO] Step 6450/200000; acc:  14.81; ppl: 17.85; xent: 2.88; lr: 0.00080; 10182/1818 tok/s;  19425 sec
+[2019-03-13 03:22:20,084 INFO] Step 6500/200000; acc:  14.80; ppl: 18.14; xent: 2.90; lr: 0.00080; 10274/1789 tok/s;  19580 sec
+[2019-03-13 03:25:01,776 INFO] Step 6550/200000; acc:  14.98; ppl: 18.61; xent: 2.92; lr: 0.00081; 9875/1727 tok/s;  19742 sec
+[2019-03-13 03:27:33,802 INFO] Step 6600/200000; acc:  14.97; ppl: 17.80; xent: 2.88; lr: 0.00082; 10505/1805 tok/s;  19894 sec
+[2019-03-13 03:30:10,725 INFO] Step 6650/200000; acc:  14.77; ppl: 17.51; xent: 2.86; lr: 0.00082; 10170/1769 tok/s;  20051 sec
+[2019-03-13 03:32:50,502 INFO] Step 6700/200000; acc:  14.77; ppl: 18.05; xent: 2.89; lr: 0.00083; 9985/1812 tok/s;  20211 sec
+[2019-03-13 03:35:27,859 INFO] Step 6750/200000; acc:  14.81; ppl: 16.15; xent: 2.78; lr: 0.00083; 10149/1814 tok/s;  20368 sec
+[2019-03-13 03:38:06,382 INFO] Step 6800/200000; acc:  14.89; ppl: 16.86; xent: 2.83; lr: 0.00084; 10066/1789 tok/s;  20527 sec
+[2019-03-13 03:40:42,517 INFO] Step 6850/200000; acc:  14.73; ppl: 16.13; xent: 2.78; lr: 0.00085; 10223/1822 tok/s;  20683 sec
+[2019-03-13 03:43:17,390 INFO] Step 6900/200000; acc:  14.88; ppl: 15.60; xent: 2.75; lr: 0.00085; 10310/1797 tok/s;  20838 sec
+[2019-03-13 03:45:54,680 INFO] Step 6950/200000; acc:  14.76; ppl: 15.07; xent: 2.71; lr: 0.00086; 10149/1813 tok/s;  20995 sec
+[2019-03-13 03:46:50,852 INFO] Loading dataset from data/cnndm/CNNDM.train.0.pt, number of examples: 99886
+[2019-03-13 03:49:05,763 INFO] Step 7000/200000; acc:  15.14; ppl: 26.04; xent: 3.26; lr: 0.00086; 8355/1240 tok/s;  21186 sec
+[2019-03-13 03:51:22,713 INFO] Step 7050/200000; acc:  14.39; ppl: 24.57; xent: 3.20; lr: 0.00087; 11633/1711 tok/s;  21323 sec
+[2019-03-13 03:53:45,656 INFO] Step 7100/200000; acc:  15.07; ppl: 23.95; xent: 3.18; lr: 0.00088; 11154/1695 tok/s;  21466 sec
+[2019-03-13 03:56:01,876 INFO] Step 7150/200000; acc:  14.97; ppl: 24.43; xent: 3.20; lr: 0.00088; 11707/1740 tok/s;  21602 sec
+[2019-03-13 03:58:22,055 INFO] Step 7200/200000; acc:  14.80; ppl: 26.47; xent: 3.28; lr: 0.00089; 11373/1680 tok/s;  21742 sec
+[2019-03-13 04:00:44,041 INFO] Step 7250/200000; acc:  14.77; ppl: 23.54; xent: 3.16; lr: 0.00090; 11239/1677 tok/s;  21884 sec
+[2019-03-13 04:03:00,271 INFO] Step 7300/200000; acc:  14.90; ppl: 23.34; xent: 3.15; lr: 0.00090; 11698/1736 tok/s;  22021 sec
+[2019-03-13 04:05:16,592 INFO] Step 7350/200000; acc:  15.20; ppl: 20.19; xent: 3.01; lr: 0.00091; 11700/1744 tok/s;  22157 sec
+[2019-03-13 04:07:31,569 INFO] Step 7400/200000; acc:  14.43; ppl: 22.24; xent: 3.10; lr: 0.00091; 11818/1720 tok/s;  22292 sec
+[2019-03-13 04:09:48,382 INFO] Step 7450/200000; acc:  14.92; ppl: 22.14; xent: 3.10; lr: 0.00092; 11657/1739 tok/s;  22429 sec
+[2019-03-13 04:12:05,154 INFO] Step 7500/200000; acc:  15.03; ppl: 22.36; xent: 3.11; lr: 0.00093; 11661/1710 tok/s;  22565 sec
+[2019-03-13 04:14:24,115 INFO] Step 7550/200000; acc:  14.37; ppl: 22.32; xent: 3.11; lr: 0.00093; 11484/1738 tok/s;  22704 sec
+[2019-03-13 04:16:40,431 INFO] Step 7600/200000; acc:  14.64; ppl: 35.24; xent: 3.56; lr: 0.00094; 11692/1755 tok/s;  22841 sec
+[2019-03-13 04:18:57,605 INFO] Step 7650/200000; acc:  15.01; ppl: 27.78; xent: 3.32; lr: 0.00095; 11625/1755 tok/s;  22978 sec
+[2019-03-13 04:21:16,083 INFO] Step 7700/200000; acc:  14.86; ppl: 60.60; xent: 4.10; lr: 0.00095; 11515/1705 tok/s;  23116 sec
+[2019-03-13 04:23:36,073 INFO] Step 7750/200000; acc:  13.54; ppl: 22.10; xent: 3.10; lr: 0.00096; 11400/1696 tok/s;  23256 sec
+[2019-03-13 04:25:53,900 INFO] Step 7800/200000; acc:  15.05; ppl: 22.04; xent: 3.09; lr: 0.00096; 11585/1694 tok/s;  23394 sec
+[2019-03-13 04:28:11,027 INFO] Step 7850/200000; acc:  15.13; ppl: 23.81; xent: 3.17; lr: 0.00097; 11637/1699 tok/s;  23531 sec
+[2019-03-13 04:30:26,247 INFO] Step 7900/200000; acc:  14.75; ppl: 20.97; xent: 3.04; lr: 0.00098; 11799/1702 tok/s;  23667 sec
+[2019-03-13 04:32:43,653 INFO] Step 7950/200000; acc:  13.13; ppl: 24.31; xent: 3.19; lr: 0.00098; 11615/1758 tok/s;  23804 sec
+[2019-03-13 04:34:57,790 INFO] Step 8000/200000; acc:  14.83; ppl: 18.75; xent: 2.93; lr: 0.00099; 11871/1749 tok/s;  23938 sec
+[2019-03-13 04:37:14,215 INFO] Step 8050/200000; acc:  14.81; ppl: 19.25; xent: 2.96; lr: 0.00099; 11684/1747 tok/s;  24074 sec
+[2019-03-13 04:39:34,714 INFO] Step 8100/200000; acc:  14.78; ppl: 21.45; xent: 3.07; lr: 0.00098; 11351/1692 tok/s;  24215 sec
+[2019-03-13 04:42:16,682 INFO] Loading dataset from data/cnndm/CNNDM.train.1.pt, number of examples: 100000
+[2019-03-13 04:42:50,288 INFO] Step 8150/200000; acc:  14.60; ppl: 27.52; xent: 3.31; lr: 0.00098; 8156/1220 tok/s;  24411 sec
+[2019-03-13 04:45:16,054 INFO] Step 8200/200000; acc:  15.38; ppl: 11.47; xent: 2.44; lr: 0.00098; 10952/1731 tok/s;  24556 sec
+[2019-03-13 04:47:42,232 INFO] Step 8250/200000; acc:  15.45; ppl: 11.31; xent: 2.43; lr: 0.00097; 10928/1689 tok/s;  24703 sec
+[2019-03-13 04:50:11,488 INFO] Step 8300/200000; acc:  15.39; ppl: 10.60; xent: 2.36; lr: 0.00097; 10694/1736 tok/s;  24852 sec
+[2019-03-13 04:52:40,531 INFO] Step 8350/200000; acc:  15.46; ppl: 10.59; xent: 2.36; lr: 0.00097; 10713/1729 tok/s;  25001 sec
+[2019-03-13 04:55:07,518 INFO] Step 8400/200000; acc:  15.35; ppl: 10.90; xent: 2.39; lr: 0.00096; 10866/1699 tok/s;  25148 sec
+[2019-03-13 04:57:43,085 INFO] Step 8450/200000; acc:  15.43; ppl: 10.59; xent: 2.36; lr: 0.00096; 10250/1630 tok/s;  25303 sec
+[2019-03-13 05:00:07,785 INFO] Step 8500/200000; acc:  15.20; ppl: 10.25; xent: 2.33; lr: 0.00096; 11038/1723 tok/s;  25448 sec
+[2019-03-13 05:02:35,843 INFO] Step 8550/200000; acc:  15.28; ppl: 10.43; xent: 2.34; lr: 0.00096; 10782/1703 tok/s;  25596 sec
+[2019-03-13 05:05:05,456 INFO] Step 8600/200000; acc:  15.10; ppl: 11.11; xent: 2.41; lr: 0.00095; 10677/1724 tok/s;  25746 sec
+[2019-03-13 05:07:34,460 INFO] Step 8650/200000; acc:  15.53; ppl: 10.39; xent: 2.34; lr: 0.00095; 10706/1693 tok/s;  25895 sec
+[2019-03-13 05:10:05,405 INFO] Step 8700/200000; acc:  15.22; ppl: 10.33; xent: 2.33; lr: 0.00095; 10580/1697 tok/s;  26046 sec
+[2019-03-13 05:12:39,305 INFO] Step 8750/200000; acc:  15.66; ppl:  9.43; xent: 2.24; lr: 0.00094; 10378/1664 tok/s;  26200 sec
+[2019-03-13 05:15:12,053 INFO] Step 8800/200000; acc:  15.37; ppl: 10.10; xent: 2.31; lr: 0.00094; 10448/1700 tok/s;  26352 sec
+[2019-03-13 05:17:42,577 INFO] Step 8850/200000; acc:  15.57; ppl: 10.14; xent: 2.32; lr: 0.00094; 10604/1691 tok/s;  26503 sec
+[2019-03-13 05:20:08,950 INFO] Step 8900/200000; acc:  15.56; ppl:  9.93; xent: 2.30; lr: 0.00094; 10911/1716 tok/s;  26649 sec
+[2019-03-13 05:22:40,131 INFO] Step 8950/200000; acc:  15.50; ppl: 10.24; xent: 2.33; lr: 0.00093; 10565/1698 tok/s;  26800 sec
+[2019-03-13 05:25:12,038 INFO] Step 9000/200000; acc:  15.21; ppl:  9.74; xent: 2.28; lr: 0.00093; 10506/1677 tok/s;  26952 sec
+[2019-03-13 05:27:36,875 INFO] Step 9050/200000; acc:  15.62; ppl: 10.37; xent: 2.34; lr: 0.00093; 11027/1726 tok/s;  27097 sec
+[2019-03-13 05:30:04,996 INFO] Step 9100/200000; acc:  15.54; ppl:  9.68; xent: 2.27; lr: 0.00093; 10777/1738 tok/s;  27245 sec
