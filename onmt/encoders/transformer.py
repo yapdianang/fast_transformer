@@ -23,10 +23,11 @@ class TransformerEncoderLayer(nn.Module):
     """
 
     def __init__(self, d_model, heads, d_ff, dropout,
-                 max_relative_positions=0, strided_attn=False):
+                 max_relative_positions=0, strided_attn=False, conv_k_v=False):
         super(TransformerEncoderLayer, self).__init__()
 
         self.strided_attn = strided_attn
+        self.conv_k_v = conv_k_v
         if self.strided_attn:
             self.self_attn = MultiHeadedStridedAttention(
                 heads, d_model, dropout=dropout,
@@ -36,6 +37,7 @@ class TransformerEncoderLayer(nn.Module):
                 heads, d_model, dropout=dropout,
                 max_relative_positions=max_relative_positions)
         self.feed_forward = PositionwiseFeedForward(d_model, d_ff, dropout)
+        self.conv1d_k_v = nn.Conv1d(d_model, d_model, kernel_size=3, stride=3)
         self.layer_norm = nn.LayerNorm(d_model, eps=1e-6)
         self.dropout = nn.Dropout(dropout)
 
@@ -51,7 +53,11 @@ class TransformerEncoderLayer(nn.Module):
             * outputs ``(batch_size, src_len, model_dim)``
         """
         input_norm = self.layer_norm(inputs)
-        context, _ = self.self_attn(input_norm, input_norm, input_norm,
+        q, k, v = input_norm, input_norm, input_norm
+        if self.conv_k_v:
+            k = self.conv1d_k_v(k.transpose(1, 2)).transpose(1, 2)
+            v = self.conv1d_k_v(v.transpose(1, 2)).transpose(1, 2)
+        context, _ = self.self_attn(k, v, q,
                                     mask=mask, type="self")
         out = self.dropout(context) + inputs
         return self.feed_forward(out)
@@ -89,7 +95,7 @@ class TransformerEncoder(EncoderBase):
     """
 
     def __init__(self, num_layers, d_model, heads, d_ff, dropout, embeddings,
-                 max_relative_positions, conv_first, strided_attn, conv_encoder_deconv):
+                 max_relative_positions, conv_first, strided_attn, conv_encoder_deconv, conv_k_v):
         super(TransformerEncoder, self).__init__()
 
         self.embeddings = embeddings
@@ -97,17 +103,17 @@ class TransformerEncoder(EncoderBase):
             [TransformerEncoderLayer(
                 d_model, heads, d_ff, dropout,
                 max_relative_positions=max_relative_positions,
-                strided_attn=strided_attn)
+                strided_attn=strided_attn, conv_k_v=conv_k_v)
              for i in range(num_layers)])
         self.layer_norm = nn.LayerNorm(d_model, eps=1e-6)
         self.conv_first = conv_first
         self.conv_encoder_deconv = conv_encoder_deconv
-        self.conv1d = nn.Conv1d(512, 512, kernel_size=3, stride=3)
+        self.conv1d = nn.Conv1d(d_model, d_model, kernel_size=3, stride=3)
         self.mask_pool = nn.MaxPool1d(kernel_size=3, stride=3)
-        self.conv_transpose = nn.ConvTranspose1d(512, 512, kernel_size=3, stride=3)
-        self.conv_transpose_pad1 = nn.ConvTranspose1d(512, 512, kernel_size=3, stride=3, output_padding=1)
-        self.conv_transpose_pad2 = nn.ConvTranspose1d(512, 512, kernel_size=3, stride=3, output_padding=2)
-        assert (not(self.conv_first and self.conv_encoder_deconv))
+        self.conv_transpose = nn.ConvTranspose1d(d_model, d_model, kernel_size=3, stride=3)
+        self.conv_transpose_pad1 = nn.ConvTranspose1d(d_model, d_model, kernel_size=3, stride=3, output_padding=1)
+        self.conv_transpose_pad2 = nn.ConvTranspose1d(d_model, d_model, kernel_size=3, stride=3, output_padding=2)
+        # assert (not(self.conv_first and self.conv_encoder_deconv))
 
     @classmethod
     def from_opt(cls, opt, embeddings):
@@ -122,7 +128,8 @@ class TransformerEncoder(EncoderBase):
             opt.max_relative_positions,
             opt.conv_first,
             opt.strided_attn,
-            opt.conv_encoder_deconv)
+            opt.conv_encoder_deconv,
+            opt.conv_k_v)
 
     def forward(self, src, lengths=None):
         """See :func:`EncoderBase.forward()`"""

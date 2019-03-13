@@ -152,9 +152,11 @@ def model_opts(parser):
               help='Size of hidden transformer feed-forward')
     
     group.add('--conv_first', '-conv_first', action="store_true",
-          help='Applies 1D Convolution before encoder to reduce sequence length by 3; perturbs with copy generator.')
+          help='Applies 1D Convolution before encoder to reduce sequence length by 3; perturbs with copy generator. CANNOT be used together with conv_encoder_deconv.')
+    group.add('--conv_k_v', '-conv_k_v', action="store_true",
+          help='Applies 1D Convolution to Key and Value before multi-headed attention.')
     group.add('--conv_encoder_deconv', '-conv_encoder_deconv', action="store_true",
-          help='Applies 1D Convolution before encoder and deconvolution after decoder, keeping copy generator intact.')
+          help='Applies 1D Convolution before encoder and deconvolution after decoder, keeping copy generator intact. CANNOT be used together with conv_first.')
     group.add('--strided_attn', '-strided_attn', action="store_true",
           help='Applies strided attention in each encoding step to reduce computation to O(N^2*4/9).')
 
