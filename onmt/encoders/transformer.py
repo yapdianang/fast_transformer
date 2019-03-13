@@ -104,9 +104,9 @@ class TransformerEncoder(EncoderBase):
         self.conv_encoder_deconv = conv_encoder_deconv
         self.conv1d = nn.Conv1d(512, 512, kernel_size=3, stride=3)
         self.mask_pool = nn.MaxPool1d(kernel_size=3, stride=3)
-        self.conv_transpose = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3)
-        self.conv_transpose_pad1 = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3, output_padding=1)
-        self.conv_transpose_pad2 = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3, output_padding=2)
+        self.conv_transpose = nn.ConvTranspose1d(512, 512, kernel_size=3, stride=3)
+        self.conv_transpose_pad1 = nn.ConvTranspose1d(512, 512, kernel_size=3, stride=3, output_padding=1)
+        self.conv_transpose_pad2 = nn.ConvTranspose1d(512, 512, kernel_size=3, stride=3, output_padding=2)
         assert (not(self.conv_first and self.conv_encoder_deconv))
 
     @classmethod
