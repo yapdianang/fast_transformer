@@ -88,9 +88,10 @@ class CopyGenerator(nn.Module):
         self.linear_copy = nn.Linear(input_size, 1)
         self.pad_idx = pad_idx
         self.conv_first = conv_first
-        self.conv_transpose = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3)
-        self.conv_transpose_pad1 = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3, output_padding=1)
-        self.conv_transpose_pad2 = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3, output_padding=2)
+        if conv_first:
+            self.conv_transpose = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3)
+            self.conv_transpose_pad1 = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3, output_padding=1)
+            self.conv_transpose_pad2 = nn.ConvTranspose1d(1, 1, kernel_size=3, stride=3, output_padding=2)
 
     def forward(self, hidden, attn, src_map):
         """

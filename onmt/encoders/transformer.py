@@ -108,11 +108,13 @@ class TransformerEncoder(EncoderBase):
         self.layer_norm = nn.LayerNorm(d_model, eps=1e-6)
         self.conv_first = conv_first
         self.conv_encoder_deconv = conv_encoder_deconv
-        self.conv1d = nn.Conv1d(d_model, d_model, kernel_size=3, stride=3)
-        self.mask_pool = nn.MaxPool1d(kernel_size=3, stride=3)
-        self.conv_transpose = nn.ConvTranspose1d(d_model, d_model, kernel_size=3, stride=3)
-        self.conv_transpose_pad1 = nn.ConvTranspose1d(d_model, d_model, kernel_size=3, stride=3, output_padding=1)
-        self.conv_transpose_pad2 = nn.ConvTranspose1d(d_model, d_model, kernel_size=3, stride=3, output_padding=2)
+        if conv_k_v or conv_encoder_deconv:
+            self.conv1d = nn.Conv1d(d_model, d_model, kernel_size=3, stride=3)
+            self.mask_pool = nn.MaxPool1d(kernel_size=3, stride=3)
+        if conv_encoder_deconv:
+            self.conv_transpose = nn.ConvTranspose1d(d_model, d_model, kernel_size=3, stride=3)
+            self.conv_transpose_pad1 = nn.ConvTranspose1d(d_model, d_model, kernel_size=3, stride=3, output_padding=1)
+            self.conv_transpose_pad2 = nn.ConvTranspose1d(d_model, d_model, kernel_size=3, stride=3, output_padding=2)
         # assert (not(self.conv_first and self.conv_encoder_deconv))
 
     @classmethod
